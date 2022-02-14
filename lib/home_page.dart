@@ -9,6 +9,23 @@ class HomePage extends StatelessWidget {
           ,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
         ),
       ),
+      body: _buildBody(),
     );
   }
+
+  Widget _buildBody() {
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: SafeArea(
+          child: SingleChildScrollView(
+            child: Center(
+
+            ),
+          )
+      ),
+    );
+
+  }
+
+
 }
