@@ -13,14 +13,23 @@ class CreatePage extends StatefulWidget {
 
 class _CreatePageState extends State<CreatePage> {
   final textEditingController = TextEditingController();
-  final imagePicker = ImagePicker();
 
-  late File _image;
 
   @override
   void dispose() {
     textEditingController.dispose();
     super.dispose();
+  }
+  final picker = ImagePicker();
+  File? _image;
+
+  Future _getImage() async {
+    // Pick an image
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+        _image = File(image!.path);
+    });
   }
 
   @override
@@ -28,7 +37,7 @@ class _CreatePageState extends State<CreatePage> {
     return Scaffold(
       appBar: _buildAppBar(),
       body: _buildBody(),
-      floatingActionButton: FloatingActionButton(onPressed: _getImage(),
+      floatingActionButton: FloatingActionButton(onPressed: _getImage,
         child: const Icon(Icons.add_a_photo),
       ),
     );
@@ -45,18 +54,18 @@ class _CreatePageState extends State<CreatePage> {
   }
 
   Widget _buildBody() {
-    return Column(
+    return SingleChildScrollView(
+      child:Column(
       children: <Widget>[
-          const Text('No Image'),
+          _image == null ? Text('No Image') : Image.file(_image!),
           TextField(
             decoration: const InputDecoration(hintText: '내용을 입력하세요.'),
             controller: textEditingController,
           )
       ],
+    ),
     );
   }
 
-  void _getImage() {
-    var image = imagePicker.pickImage(source: ImageSource.gallery);
-  }
+
 }
