@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:instagram_clone/tab_page.dart';
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
-class LoginPage extends StatelessWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final GoogleSignIn _googleSignIn  = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +21,11 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('Instagram Clone',
-            style: TextStyle(fontSize: 40.0,fontWeight: FontWeight.bold),),
+              style: TextStyle(fontSize: 40.0,fontWeight: FontWeight.bold),),
             const Padding(padding: EdgeInsets.all(50.0)),
             SignInButton(Buttons.Google, onPressed: (){
-                _handleSignIn().then((user){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TabPage(user.user!)));
-                });
+              _handleSignIn().then((user) =>
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TabPage(user.user!))));
             })
           ],
         ),
@@ -38,6 +42,5 @@ class LoginPage extends StatelessWidget {
     );
 
     return await FirebaseAuth.instance.signInWithCredential(credential);
-
   }
 }

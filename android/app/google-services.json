@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "303694398932-lpj9hcun2a4d7u01c6n07uas6v4tlr3g.apps.googleusercontent.com",
+          "client_id": "303694398932-bq695a98riicfo4enl3is82nq2kmm7cl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.jkkim.instagram.instagram_clone",
-            "certificate_hash": "0a1d5e655016a313a548b1315489ad2d7b8388d1"
+            "certificate_hash": "1505cc7b7b9bd5e7f032e70fbd453cf4f49e711e"
           }
         },
         {
