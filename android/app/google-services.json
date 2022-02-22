@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "303694398932-puh6f2q291m1qqomjktj6tm35394gmro.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jkkim.instagram.instagram_clone",
+            "certificate_hash": "0a1d5e655016a313a548b1315489ad2d7b8388d1"
+          }
+        },
+        {
           "client_id": "303694398932-qg9hpjd2qh754rs6ci73uu7tn561u0r5.apps.googleusercontent.com",
           "client_type": 3
         }
