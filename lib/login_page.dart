@@ -24,8 +24,7 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(fontSize: 40.0,fontWeight: FontWeight.bold),),
             const Padding(padding: EdgeInsets.all(50.0)),
             SignInButton(Buttons.Google, onPressed: (){
-              _handleSignIn().then((user) =>
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TabPage(user.user!))));
+              _handleSignIn();
             })
           ],
         ),
