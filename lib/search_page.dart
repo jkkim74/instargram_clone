@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/create_page.dart';
+import 'package:instagram_clone/detail_post_page.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  final User user;
+  SearchPage(this.user);
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -15,7 +19,7 @@ class _SearchPageState extends State<SearchPage> {
       body: _buildBody(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const CreatePage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePage(widget.user)));
         },
         child: const Icon(Icons.create),
         backgroundColor: Colors.blue,
@@ -24,18 +28,43 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget _buildBody() {
-    return GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: 1.0,
-        mainAxisSpacing: 1.0,
-        crossAxisSpacing: 1.0),
-        itemCount: 5,
-        itemBuilder: (context, index){
-            return _buildListItem(context, index);
-        });
+    print('search_page created');
+    return Scaffold(
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('post').snapshots(),
+          builder: (_, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            var items = snapshot.data?.docs ?? [];
+
+            return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 1.0,
+                    mainAxisSpacing: 1.0,
+                    crossAxisSpacing: 1.0),
+                itemCount: items.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return _buildListItem(context, items[index]);
+                });
+          }),
+    );
   }
 
-  Widget _buildListItem(BuildContext context, int index) {
-    return Image.network("https://lh3.googleusercontent.com/a-/AOh14GjX_0Ehh3QtoTRWhwXhEwR_TQHhNNhY4PU3ZlZyyg=s288-p-rw-no",fit: BoxFit.cover,);
+  Widget _buildListItem(BuildContext context, document) {
+    return InkWell(
+        onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context){
+              return DetailPostPage(document);
+            })
+            );
+        },
+        child: Image.network(
+          document['photoUrl'],
+          fit: BoxFit.cover,
+        )
+    );
   }
 }
